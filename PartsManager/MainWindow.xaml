@@ -1,0 +1,290 @@
+﻿<Window x:Class="PartsManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PartsManager"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl x:Name="TopTabs">
+            <TabItem Header="Home" Selector.Selected="HomeTabSelected">
+                <Grid>
+                    <ListBox x:Name="AvailableList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,26,615,231" SelectionChanged="AvailableList_SelectionChanged"/>
+                    <ListBox x:Name="UnavailableList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,247,615,10" SelectionChanged="UnavailableList_SelectionChanged"/>
+                    <Label x:Name="l1" Content="Available" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="l2" Content="Unavailable" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top"/>
+                    <ListView x:Name="Comps" Margin="199,247,337,15">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Comp}" Header="Components"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Quant}" Header="Quantity Needed"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Stock}" Header="In Stock"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <TextBlock x:Name="Notes" HorizontalAlignment="Left" Margin="486,36,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="170" Width="264"/>
+                    <TextBlock x:Name="Procedure" HorizontalAlignment="Left" Margin="199,38,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="173" Width="264"/>
+                    <Label x:Name="l3" Content="Procedure" HorizontalAlignment="Left" Margin="194,10,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="l4" Content="Notes" HorizontalAlignment="Left" Margin="485,8,0,0" VerticalAlignment="Top"/>
+                    <ListView x:Name="Stock" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="485,247,51,15">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Part}" Header="Part"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding In_Stock}" Header="In Stock"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding On_Order}" Header="On Order"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Base}" Header="Is Base"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Label x:Name="l5" Content="Inventory" HorizontalAlignment="Left" Margin="486,213,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Base Parts">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="283*"/>
+                        <ColumnDefinition Width="108*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="BaseList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,59,444,59" Grid.ColumnSpan="2" SelectionChanged="BaseList_SelectionChanged"/>
+                    <Label x:Name="l6" Content="Parts" HorizontalAlignment="Left" Margin="1,31,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <ListBox x:Name="SellerList" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="156,59,280,59" SelectionChanged="SellerList_SelectionChanged"/>
+                    <Label x:Name="l7" Grid.Column="1" Content="Sellers" HorizontalAlignment="Left" Margin="157,31,0,0" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="Price" Grid.Column="1" HorizontalAlignment="Left" Margin="375,63,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="SellNotes" Grid.Column="1" HorizontalAlignment="Left" Margin="331,159,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="237" Width="406" Grid.ColumnSpan="2"/>
+                    <Label x:Name="l8" Grid.Column="1" Content="Price:" HorizontalAlignment="Left" Margin="325,58,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="l9" Grid.Column="1" Content="Notes:" HorizontalAlignment="Left" Margin="326,133,0,0" VerticalAlignment="Top"/>
+                    <Label Grid.Column="1" Content="Sale Link:" HorizontalAlignment="Left" Margin="325,82,0,0" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="SaleLink" Grid.Column="1" HorizontalAlignment="Left" Margin="330,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="425">
+                        <Hyperlink x:Name="SaleHyperLink" NavigateUri="https://stackoverflow.com/" RequestNavigate="Hyperlink_RequestNavigate">
+                            <TextBlock x:Name="SaleLinkText" Text=""/>
+                        </Hyperlink>
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Assembled Parts" Selector.Selected="AssembleTabSelected">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="717*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="AssembleList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,62,660,55" Grid.ColumnSpan="3" SelectionChanged="AssembleList_SelectionChanged"/>
+                    <Label x:Name="l13" Content="Parts" HorizontalAlignment="Left" Margin="11,36,0,0" VerticalAlignment="Top"/>
+                    <ListView x:Name="AssembleComps" Grid.Column="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="104,62,277,240">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Comp}" Header="Components"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Quant}" Header="Quantity Needed"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Stock}" Header="In Stock"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Order}" Header="Missing"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Label x:Name="l14" Grid.Column="2" Content="Components" HorizontalAlignment="Left" Margin="105,36,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="AssembleNum" Grid.Column="2" HorizontalAlignment="Left" Margin="515,205,0,0" TextWrapping="Wrap" Text="Numerical Values Only" VerticalAlignment="Top" Width="134" PreviewTextInput="PreviewAssembleTextInput"/>
+                    <Label x:Name="l15" Grid.Column="2" Content="Assemble Part" HorizontalAlignment="Left" Margin="512,176,0,0" VerticalAlignment="Top"/>
+                    <Button Grid.Column="2" Content="Assemble" HorizontalAlignment="Left" Margin="515,232,0,0" VerticalAlignment="Top" Click="AssemblePart_Click"/>
+                    <TextBlock x:Name="AssembleStock" Grid.Column="2" HorizontalAlignment="Left" Margin="515,88,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                    <Label x:Name="l16" Grid.Column="2" Content="In Stock:" HorizontalAlignment="Left" Margin="511,63,0,0" VerticalAlignment="Top"/>
+                    <Label Grid.Column="2" Content="On Order:" HorizontalAlignment="Left" Margin="510,117,0,0" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="AssembleOrder" Grid.Column="2" HorizontalAlignment="Left" Margin="516,144,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                    <Label Grid.Column="2" Content="Raw Needed:" HorizontalAlignment="Left" Margin="103,171,0,0" VerticalAlignment="Top"/>
+                    <ListView x:Name="AssembleNeed" Grid.Column="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="105,202,277,55">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Comp}" Header="Components"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Quant}" Header="Amount Short"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Stock}" Header="On Order"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Inventory">
+                <Grid>
+                    <ListBox x:Name="InventoryList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,34,636,10" SelectionChanged="InventoryList_SelectionChanged"/>
+                    <Label x:Name="l10" Content="Parts:" HorizontalAlignment="Left" Margin="11,4,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="l11" Content="Current Stock:" HorizontalAlignment="Left" Margin="174,4,0,0" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="InvStock" HorizontalAlignment="Left" Margin="260,9,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                    <Label x:Name="l12" Content="Inventory Options (Values can be negative):" HorizontalAlignment="Left" Margin="175,35,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Part Notes:" HorizontalAlignment="Left" Margin="502,35,0,0" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="InventoryNotes" HorizontalAlignment="Left" Margin="507,71,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="222" Width="216"/>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="329" Margin="178,66,0,0" VerticalAlignment="Top" Width="296">
+                        <Grid>
+                            <Label Content="Add to Inventory Stock:" HorizontalAlignment="Left" Margin="5,6,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModStock" HorizontalAlignment="Left" Margin="8,35,0,0" TextWrapping="Wrap" Text="Numerical Values Only" VerticalAlignment="Top" Width="148" PreviewTextInput="PreviewInventoryTextInput"/>
+                            <Button x:Name="ChangeStock" Content="Add" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="56" Click="ChangeStock_Click"/>
+                            <Label Content="Add to On Order:" HorizontalAlignment="Left" Margin="5,106,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModOrder" HorizontalAlignment="Left" Margin="8,137,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" PreviewTextInput="PreviewInventoryTextInput"/>
+                            <Button x:Name="ChangeOrder" Content="Order" HorizontalAlignment="Left" Margin="10,167,0,0" VerticalAlignment="Top" Width="56" Click="ChangeOrder_Click"/>
+                            <Label Content="Receive Order (Add to Stock, Subtract from Order):" HorizontalAlignment="Left" Margin="5,209,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModReceive" HorizontalAlignment="Left" Margin="8,240,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" PreviewTextInput="PreviewInventoryTextInput"/>
+                            <Button x:Name="ChangeReceive" Content="Receive" HorizontalAlignment="Left" Margin="10,270,0,0" VerticalAlignment="Top" Width="56" Click="ChangeReceive_Click"/>
+                        </Grid>
+                    </Border>
+                    <Label Content="Amount On Order:" HorizontalAlignment="Left" Margin="327,4,0,0" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="InvOrder" HorizontalAlignment="Left" Margin="438,9,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Create Part">
+                <Grid>
+                    <TextBox x:Name="NewPartName" HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="PreviewNameTextInput"/>
+                    <Label Content="Part Name (no ':' or '|' characters):" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top"/>
+                    <RichTextBox x:Name="NewPartNotes" Margin="499,41,10,10">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text=""/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <Label Content="Part Notes (Leave blank if no notes):" HorizontalAlignment="Left" Margin="500,17,0,0" VerticalAlignment="Top"/>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="194" Margin="11,202,0,0" VerticalAlignment="Top" Width="235">
+                        <Grid x:Name="BaseGrid">
+                            <Label Content="Price:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="NewPartPrice" HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="PreviewPriceTextInput"/>
+                            <Label Content="Seller:" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="NewPartSeller" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+                        </Grid>
+                    </Border>
+                    <Label Content="Base Part Information:" HorizontalAlignment="Left" Margin="12,176,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Create Part" HorizontalAlignment="Left" Margin="12,102,0,0" VerticalAlignment="Top" Width="73" Click="CreatePart_Click"/>
+                    <Label Content="Assembled Part Information:" HorizontalAlignment="Left" Margin="267,17,0,0" VerticalAlignment="Top"/>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="353" Margin="267,43,0,0" VerticalAlignment="Top" Width="214">
+                        <Grid x:Name="AssembledGrid">
+                            <Label Content="Components:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                            <ListBox x:Name="NewPartComp" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,41,10,245"/>
+                            <Label Content="Amount:" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="NewPartCompAmount" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="50" Margin="0,115,0,0" PreviewTextInput="PreviewAssembleTextInput"/>
+                            <Button Content="Add" HorizontalAlignment="Left" Margin="149,115,0,0" VerticalAlignment="Top" Width="53" Click="NewPartAdd_Click"/>
+                            <ListView x:Name="NewPartCompPieces" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,143,12,143">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Comp}" Header="Part"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Quant}" Header="Quantity"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Button Content="Clear" HorizontalAlignment="Left" Margin="11,215,0,0" VerticalAlignment="Top" Width="54" Click="ClearButton_Click"/>
+                            <Label Content="Procedure Form:" HorizontalAlignment="Left" Margin="10,253,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="NewPartFile" HorizontalAlignment="Left" Margin="11,279,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button Content="Browse" HorizontalAlignment="Left" Margin="11,306,0,0" VerticalAlignment="Top" Width="54"/>
+
+                        </Grid>
+                    </Border>
+                    <CheckBox x:Name="BaseCheck" Content="Base Part" HorizontalAlignment="Left" Margin="12,74,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Remove Part">
+                <Grid>
+                    <ListBox x:Name="RemoveList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="330,70,330,71"/>
+                    <Label Content="Parts:" HorizontalAlignment="Left" Margin="330,40,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Remove Part" HorizontalAlignment="Center" Margin="0,365,0,0" VerticalAlignment="Top" Width="89" Click="RemovePart_Click"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Modify Part">
+                <Grid>
+                    <Label Content="Parts:" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
+                    <ListBox x:Name="ModList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,35,656,10" SelectionChanged="ModList_SelectionChanged"/>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="360" Margin="160,36,0,0" VerticalAlignment="Top" Width="240">
+                        <Grid x:Name="ModBaseGrid" Margin="0,0,0,-1">
+                            <Label Content="Seller:" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top"/>
+                            <ListBox x:Name="ModSellerList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,31,5,249" SelectionChanged="ModSellerList_SelectionChanged"/>
+                            <Label Content="New Seller:" HorizontalAlignment="Left" Margin="4,110,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModSeller" HorizontalAlignment="Center" Margin="0,138,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="222"/>
+                            <Label Content="New Price:" HorizontalAlignment="Left" Margin="4,157,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModPrice" HorizontalAlignment="Center" Margin="0,181,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="224"/>
+                            <Label Content="New Notes:" HorizontalAlignment="Left" Margin="7,247,0,0" VerticalAlignment="Top"/>
+                            <RichTextBox x:Name="ModBaseNotes" Margin="10,276,10,10">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="RichTextBox"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <Label Content="New Sale Link:" HorizontalAlignment="Left" Margin="6,202,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModSaleLink" HorizontalAlignment="Center" Margin="0,228,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="228"/>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="360" Margin="425,36,0,0" VerticalAlignment="Top" Width="240">
+                        <Grid x:Name="ModAssembledGrid"  Margin="0,-1,0,0">
+                            <Label Content="Components:" HorizontalAlignment="Left" Margin="5,7,0,0" VerticalAlignment="Top"/>
+                            <ListBox x:Name="ModPartComp" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,32,5,276" Width="228"/>
+                            <TextBox x:Name="ModPartCompAmount" HorizontalAlignment="Left" Margin="85,94,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="54" PreviewTextInput="PreviewAssembleTextInput"/>
+                            <Label Content="Amount:" HorizontalAlignment="Left" Margin="17,88,0,0" VerticalAlignment="Top"/>
+                            <Button Content="Add" HorizontalAlignment="Left" Margin="159,94,0,0" VerticalAlignment="Top" Width="47" Click="ModPartAdd_Click"/>
+                            <ListView x:Name="ModPartCompPieces" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,123,5,170">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Comp}" Header="Part"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Quant}" Header="Quantity"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Button Content="Clear" HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" Width="52" Click="ClearMod_Click"/>
+                            <Label Content="New Procedure Form:" HorizontalAlignment="Left" Margin="5,215,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="ModForm" HorizontalAlignment="Center" Margin="0,241,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="224" RenderTransformOrigin="0.5,0.5">
+                                <TextBox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-0.072"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </TextBox.RenderTransform>
+                            </TextBox>
+                            <Label Content="New Notes:" HorizontalAlignment="Left" Margin="5,263,0,0" VerticalAlignment="Top"/>
+                            <RichTextBox x:Name="ModAssembledNotes" Margin="5,289,5,5">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="RichTextBox"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </Border>
+                    <Label Content="Base Part Controls:" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Assembled Part Controls:" HorizontalAlignment="Left" Margin="429,10,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Modify Part" HorizontalAlignment="Left" Margin="683,0,0,0" VerticalAlignment="Center" Width="92" Click="ModifyPart_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Part">
+                <Grid>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="72" Margin="10,33,0,0" VerticalAlignment="Top" Width="127">
+                        <Grid>
+                            <RadioButton Content="Base Part" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,8,0,0"/>
+                            <RadioButton Content="Primary Part" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,47,0,0"/>
+                            <RadioButton Content="Assembled Part" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                        </Grid>
+                    </Border>
+                    <Label Content="Part Type:" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
+                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,118,592,10"/>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="363" Margin="227,33,0,0" VerticalAlignment="Top" Width="557">
+                        <Grid Margin="0,0,0,-1">
+                            <Label Content="Seller:" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top"/>
+                            <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,31,277,10" SelectionChanged="ModSellerList_SelectionChanged"/>
+                            <Label Content="New Seller:" HorizontalAlignment="Left" Margin="283,4,0,0" VerticalAlignment="Top"/>
+                            <TextBox HorizontalAlignment="Left" Margin="286,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="240"/>
+                            <Label Content="New Price:" HorizontalAlignment="Left" Margin="283,58,0,0" VerticalAlignment="Top"/>
+                            <TextBox HorizontalAlignment="Left" Margin="285,89,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="241"/>
+                            <Label Content="New Notes:" HorizontalAlignment="Left" Margin="286,163,0,0" VerticalAlignment="Top"/>
+                            <RichTextBox Margin="283,191,10,10">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="RichTextBox"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <Label Content="New Sale Link:" HorizontalAlignment="Left" Margin="286,112,0,0" VerticalAlignment="Top"/>
+                            <TextBox HorizontalAlignment="Left" Margin="286,138,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="240"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
